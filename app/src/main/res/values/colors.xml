@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorCardView">#FFFEFE</color>
+    <color name="colorPrimary">#FFF6D4</color>
+    <color name="colorPrimary2">#FFF6BB</color>
+    <color name="colorPrimaryDark">#FFC107</color>
+    <color name="colorAccent">#FF5722</color>
+
+    <color name="colorBlack">#1A1A1A</color>
+    <color name="colorGrayBlack">#313131</color>
+    <color name="colorGray">#6B6B6B</color>
+    <color name="colorWhite">#ECECEC</color>
+</resources>
