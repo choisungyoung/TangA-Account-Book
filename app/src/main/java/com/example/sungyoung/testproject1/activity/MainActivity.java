@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Drawable alpha = ((ImageView)findViewById(R.id.logoImageView)).getDrawable();
 
-        alpha.setAlpha(80);
-
         Button openbankBtn = (Button) findViewById(R.id.diaryBtn);
         openbankBtn.setOnClickListener(new View.OnClickListener() {
             @Override
