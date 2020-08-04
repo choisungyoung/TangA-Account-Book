@@ -77,7 +77,8 @@ public class ExpenseFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         String monthStr = (month > 8 ? "" : "0") + (month + 1);
-                        String date = year + "년 " + monthStr + "월 " + day + "일";
+                        String dayStr = (day <= 9 ? "0" : "" ) + day;
+                        String date = year + "년 " + monthStr + "월 " + dayStr + "일";
                         if(endDateText.getText().toString().compareTo(date) < 0){
                             date  =endDateText.getText().toString();
                         }
@@ -100,7 +101,8 @@ public class ExpenseFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         String monthStr = (month > 8 ? "" : "0") + (month + 1);
-                        String date = year + "년 " + monthStr + "월 " + day + "일";
+                        String dayStr = (day <= 9 ? "0" : "" ) + day;
+                        String date = year + "년 " + monthStr + "월 " + dayStr + "일";
                         if(startDateText.getText().toString().compareTo(date) > 0){
                             date  =startDateText.getText().toString();
                         }

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.sungyoung.testproject1.activity.AccountBookActivity;
 
@@ -33,8 +34,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         activity.showList();
 */
         String monthStr = (month > 8 ? "" : "0" ) + (month+1);
+        String dayStr = (day <= 9 ? "0" : "" ) + day;
         TodayFragment tf = ((AccountBookActivity)getActivity()).tf;
-        tf.dateText.setText(year+"년 "+monthStr+"월 "+ day + "일");
+        tf.dateText.setText(year+"년 "+monthStr+"월 "+ dayStr + "일");
         tf.showList();
     }
 }
