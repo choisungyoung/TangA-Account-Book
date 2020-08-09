@@ -207,25 +207,33 @@ public class TodayFragment extends Fragment {
         });
 
         //자동완성 클릭이벤트
+        autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    Cursor autoCursor = dbHelper.selectAuto();
+                    autoList = new ArrayList<>();
+
+                    while (autoCursor.moveToNext()) {
+                        String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
+                        autoList.add(name);
+                    }
+                    // AutoCompleteTextView 에 아답터를 연결한다.
+                    autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_dropdown_item_1line,  autoList ));
+
+                    Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                    autoCompleteTextView.showDropDown();
+                }
+            }
+        });/*
         autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Cursor autoCursor = dbHelper.selectAuto();
-                autoList = new ArrayList<>();
 
-                while (autoCursor.moveToNext()) {
-                    String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
-                    autoList.add(name);
-                }
-                // AutoCompleteTextView 에 아답터를 연결한다.
-                autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_dropdown_item_1line,  autoList ));
-
-                Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
-                autoCompleteTextView.showDropDown();
             }
-        });
+        });*/
     }
     public void showList(){
 
