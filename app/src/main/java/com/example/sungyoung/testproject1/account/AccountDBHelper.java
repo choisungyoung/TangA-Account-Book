@@ -38,7 +38,11 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
         db.insert(AccountContract.AccountEntry.TABLE_NAME, null, values);
     }
-
+    public Cursor selectAllData(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account ;" ,  null);
+        return cursor;
+    }
     public Cursor selectAccountByDate(String date) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account where date=? order by ? desc;" ,  new String[]{date, BaseColumns._ID});

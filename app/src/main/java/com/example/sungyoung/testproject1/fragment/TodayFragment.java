@@ -77,6 +77,9 @@ public class TodayFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private AccountBookActivity accountBookActivity = null;
 
+    //자동완성
+    private AutoCompleteTextView autoCompleteTextView = null;
+
     public TodayFragment() {
     }
     public static TodayFragment newInstance(String param1, String param2) {
@@ -129,6 +132,9 @@ public class TodayFragment extends Fragment {
         spinner_field.setAdapter(adapter);
 
         confButton = view.findViewById(R.id.confButton);
+
+        //자동완성
+        autoCompleteTextView = (AutoCompleteTextView) acView.findViewById(R.id.accountEditText);
 
         initListener();
 
@@ -197,6 +203,27 @@ public class TodayFragment extends Fragment {
                     priceEditView.setText(result);    // 결과 텍스트 셋팅.
                     priceEditView.setSelection(result.length());     // 커서를 제일 끝으로 보냄.
                 }
+            }
+        });
+
+        //자동완성 클릭이벤트
+        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Cursor autoCursor = dbHelper.selectAuto();
+                autoList = new ArrayList<>();
+
+                while (autoCursor.moveToNext()) {
+                    String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
+                    autoList.add(name);
+                }
+                // AutoCompleteTextView 에 아답터를 연결한다.
+                autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_dropdown_item_1line,  autoList ));
+
+                Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                autoCompleteTextView.showDropDown();
             }
         });
     }
@@ -268,12 +295,9 @@ public class TodayFragment extends Fragment {
             String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
             autoList.add(name);
         }
-
-        final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) acView.findViewById(R.id.accountEditText);
         // AutoCompleteTextView 에 아답터를 연결한다.
         autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line,  autoList ));
-
 
         DecimalFormat format = new DecimalFormat("###,###");
         yestTestView.setText(format.format(yest) + " 원  ");

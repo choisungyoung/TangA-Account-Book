@@ -8,5 +8,8 @@
     <string-array name="menu_array">
         <item>일별 내역 보기</item>
         <item>기간으로 내역 보기</item>
+        <item>데이터 내보내기</item>
+        <item>데이터 불러오기</item>
+        <item>데이터 다지우기(개발)</item>
     </string-array>
 </resources>
