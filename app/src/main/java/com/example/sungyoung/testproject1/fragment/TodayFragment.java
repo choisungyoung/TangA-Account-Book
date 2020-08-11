@@ -32,8 +32,10 @@ import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.Account;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
 import com.example.sungyoung.testproject1.adapter.ListviewAdapter;
+import com.example.sungyoung.testproject1.util.Util;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,9 +58,12 @@ public class TodayFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private AccountDBHelper dbHelper;
 
+    public Button confButton;
+    public Button yestButton;
+    public Button tomorrowButton;
+
     public TextView dateText;
     public ListView listView;
-    public Button confButton;
     public Spinner spinner_field;
     public TextView imTestView;
     public TextView exTestView;
@@ -70,6 +75,7 @@ public class TodayFragment extends Fragment {
     public View acView;
 
     DecimalFormat df = new DecimalFormat("###,###");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
     String result = "";
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -109,7 +115,6 @@ public class TodayFragment extends Fragment {
         dbHelper = new AccountDBHelper(getContext());
 
         Date today = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
         String result = dateFormat.format(today);
 
         dateText = (TextView) view.findViewById(R.id.dateText);
@@ -124,6 +129,7 @@ public class TodayFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView);
         priceEditView = view.findViewById(R.id.priceEditView);
 
+        //어제내일 init
 
         //지출/수입 스피너
         String[] spinnerArr = getResources().getStringArray(R.array.imex_array);
@@ -132,6 +138,8 @@ public class TodayFragment extends Fragment {
         spinner_field.setAdapter(adapter);
 
         confButton = view.findViewById(R.id.confButton);
+        yestButton = view.findViewById(R.id.yestButton);
+        tomorrowButton = view.findViewById(R.id.tomorrowButton);
 
         //자동완성
         autoCompleteTextView = (AutoCompleteTextView) acView.findViewById(R.id.accountEditText);
@@ -185,6 +193,34 @@ public class TodayFragment extends Fragment {
                 insertItem(view);
             }
         });
+        //어제버튼
+        yestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date date = Util.getStringToDate(dateText.getText().toString());
+                if(date==null)
+                    Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                else{
+                    date = new Date(date.getTime()+(1000*60*60*24*-1));
+                    dateText.setText(dateFormat.format(date));
+                    showList();
+                }
+            }
+        });
+        //내일버튼
+        tomorrowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date date = Util.getStringToDate(dateText.getText().toString());
+                if(date==null)
+                    Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                else{
+                    date = new Date(date.getTime()+(1000*60*60*24*+1));
+                    dateText.setText(dateFormat.format(date));
+                    showList();
+                }
+            }
+        });
         //금액 입력 edit변화 이벤트
         priceEditView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -226,15 +262,9 @@ public class TodayFragment extends Fragment {
                     autoCompleteTextView.showDropDown();
                 }
             }
-        });/*
-        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-            }
-        });*/
+        });
     }
+
     public void showList(){
 
         Log.d("test@",dateText.getText().toString());

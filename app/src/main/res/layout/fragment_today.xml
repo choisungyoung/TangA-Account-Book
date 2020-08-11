@@ -16,7 +16,8 @@
         <!--  날짜 카드뷰  -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="0">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/dateCardview"
@@ -58,6 +59,7 @@
             android:id="@+id/priceCardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
@@ -65,142 +67,142 @@
             app:cardCornerRadius="10dp">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp">
+                    android:orientation="horizontal">
 
-                <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/yestLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="이월금"
+                        android:textSize="20sp" />
 
                     <TextView
-                            android:id="@+id/yestLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:text="이월금"
-                            android:textSize="20sp" />
+                        android:id="@+id/yestTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="right"
+                        android:text="0 원  "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:id="@+id/yestTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="right"
-                            android:text="0 원  "
-                            android:textColor="@color/colorBlack"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                    <TextView
-                            android:id="@+id/blank01"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3" />
+                        android:id="@+id/blank01"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:layout_width="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/importLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="수입금"
+                        android:textSize="20sp" />
 
                     <TextView
-                            android:id="@+id/importLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:text="수입금"
-                            android:textSize="20sp" />
+                        android:id="@+id/importTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="right"
+                        android:text="0 원  "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:id="@+id/importTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="right"
-                            android:text="0 원  "
-                            android:textColor="@color/colorBlack"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                    <TextView
-                            android:id="@+id/blank02"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3" />
+                        android:id="@+id/blank02"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:layout_width="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/expenseLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="지출액"
+                        android:textSize="20sp" />
 
                     <TextView
-                            android:id="@+id/expenseLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:text="지출액"
-                            android:textSize="20sp" />
+                        android:id="@+id/expenseTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="right"
+                        android:text="0 원  "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:id="@+id/expenseTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="right"
-                            android:text="0 원  "
-                            android:textColor="@color/colorBlack"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                    <TextView
-                            android:id="@+id/blank03"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3" />
+                        android:id="@+id/blank03"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:layout_width="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/balanceLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_weight="3"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="잔   액"
+                        android:textSize="20sp" />
 
                     <TextView
-                            android:id="@+id/balanceLabel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:text="잔   액"
-                            android:textSize="20sp" />
+                        android:id="@+id/balanceTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="right"
+                        android:text="0 원  "
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                            android:id="@+id/balanceTextView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:gravity="right"
-                            android:text="0 원  "
-                            android:textColor="@color/colorBlack"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                    <TextView
-                            android:id="@+id/blank04"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3" />
+                        android:id="@+id/blank04"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -211,6 +213,7 @@
             android:id="@+id/inputCardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
@@ -218,61 +221,61 @@
             app:cardCornerRadius="10dp">
 
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <AutoCompleteTextView
-                            android:id="@+id/accountEditText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:completionHint="검색어를 입력하세요."
-                            android:completionThreshold="0"
-                            android:ems="10"
-                            android:hint="계정명을 입력하세요" />
+                        android:id="@+id/accountEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:completionHint="검색어를 입력하세요."
+                        android:completionThreshold="0"
+                        android:ems="10"
+                        android:hint="계정명을 입력하세요" />
 
                     <Spinner
-                            android:id="@+id/imexSpinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:spinnerMode="dropdown" />
+                        android:id="@+id/imexSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown" />
 
 
                 </LinearLayout>
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <EditText
-                            android:id="@+id/priceEditView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:hint="금액을 입력하세요."
-                            android:inputType="number" />
+                        android:id="@+id/priceEditView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="금액을 입력하세요."
+                        android:inputType="number" />
 
                     <Button
-                            android:id="@+id/confButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:background="@color/colorAccent"
-                            android:text="입력"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                        android:id="@+id/confButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius"
+                        android:text="입력"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -282,7 +285,8 @@
         <android.support.v7.widget.CardView
             android:id="@+id/listCardview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
@@ -290,17 +294,17 @@
             app:cardCornerRadius="10dp">
 
             <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorWhite"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <android.support.design.widget.TabLayout
-                        android:id="@+id/tabLaout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:tabTextAppearance="@style/tab_text">
+                    android:id="@+id/tabLaout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabTextAppearance="@style/tab_text">
 
                     <android.support.design.widget.TabItem
                             android:layout_width="wrap_content"
@@ -314,12 +318,42 @@
                 </android.support.design.widget.TabLayout>
 
                 <ListView
-                        android:id="@+id/listView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textFilterEnabled="true"></ListView>
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textFilterEnabled="true"></ListView>
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/yestButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="어  제"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="1dp"/>
+
+            <Button
+                    android:id="@+id/tomorrowButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="내  일"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
