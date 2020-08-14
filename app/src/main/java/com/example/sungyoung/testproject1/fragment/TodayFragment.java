@@ -246,21 +246,21 @@ public class TodayFragment extends Fragment {
         autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b){
-                    Cursor autoCursor = dbHelper.selectAuto();
-                    autoList = new ArrayList<>();
+            if(b){
+                Cursor autoCursor = dbHelper.selectAuto();
+                autoList = new ArrayList<>();
 
-                    while (autoCursor.moveToNext()) {
-                        String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
-                        autoList.add(name);
-                    }
-                    // AutoCompleteTextView 에 아답터를 연결한다.
-                    autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_dropdown_item_1line,  autoList ));
-
-                    Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
-                    autoCompleteTextView.showDropDown();
+                while (autoCursor.moveToNext()) {
+                    String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
+                    autoList.add(name);
                 }
+                // AutoCompleteTextView 에 아답터를 연결한다.
+                autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_dropdown_item_1line,  autoList ));
+
+                Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                autoCompleteTextView.showDropDown();
+            }
             }
         });
     }

@@ -7,24 +7,32 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sungyoung.testproject1.activity.AccountBookActivity;
 import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.Account;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
 import com.example.sungyoung.testproject1.adapter.ImexListviewAdapter;
+import com.example.sungyoung.testproject1.util.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 public class ExpenseFragment extends Fragment {
@@ -33,6 +41,11 @@ public class ExpenseFragment extends Fragment {
     TextView endDateText = null;
     TabLayout tabLaout = null;
     ListView listView = null;
+
+    //자동완성
+    private AutoCompleteTextView autoCompleteTextView = null;
+    public List<String> autoList;
+
     private AccountDBHelper dbHelper;
     private DatePickerDialog.OnDateSetListener startDateListener;
     private DatePickerDialog.OnDateSetListener endDateListener;
@@ -54,16 +67,22 @@ public class ExpenseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_expense, container, false);
         Date today = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
-        String result = dateFormat.format(today);
+        String endDate = dateFormat.format(today);
+        Date date = new Date(today.getTime()+(1000*60*60*24*-7));
+        String startDate = dateFormat.format(date);
 
         dbHelper = new AccountDBHelper(getContext());
         startDateText = (TextView) view.findViewById(R.id.startDateText);
         endDateText = (TextView) view.findViewById(R.id.endDateText);
         tabLaout = view.findViewById(R.id.tabLaout);
         listView = view.findViewById(R.id.listView);
-        startDateText.setText(result);
-        endDateText.setText(result);
 
+        //자동완성
+        autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.searchEditText);
+        endDateText.setText(endDate);
+        startDateText.setText(startDate);
+
+        initAutoComplete();
         initListener();
         selectAccount(tabLaout.getSelectedTabPosition());
         return view;
@@ -134,12 +153,44 @@ public class ExpenseFragment extends Fragment {
 
             }
         });
+
+        //자동완성 클릭이벤트
+        autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    Cursor autoCursor = dbHelper.selectAuto();
+                    autoList = new ArrayList<>();
+
+                    while (autoCursor.moveToNext()) {
+                        String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
+                        autoList.add(name);
+                    }
+                    // AutoCompleteTextView 에 아답터를 연결한다.
+                    autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_dropdown_item_1line,  autoList ));
+
+                    Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                    autoCompleteTextView.showDropDown();
+                }
+            }
+        });
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override //입력하기 전에 호출되는 API
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override //EditText에 변화가 있을 때
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                selectAccount(tabLaout.getSelectedTabPosition());
+            }
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
     }
 
     public void selectAccount(int position){
         String imex1 = position == 0 ? "지출" : "수입";
 
-        Cursor cursor = dbHelper.selectAccountByDateByDate(startDateText.getText().toString(), endDateText.getText().toString(), imex1);
+        Cursor cursor = dbHelper.selectAccountByDateByDate(startDateText.getText().toString(), endDateText.getText().toString(), imex1, autoCompleteTextView.getText().toString());
         ArrayList<Account> aList = new ArrayList<>();
 
         String curDate = "";
@@ -165,7 +216,18 @@ public class ExpenseFragment extends Fragment {
         listView.setAdapter(iladapter);
     }
 
+    public void initAutoComplete() {
+        Cursor autoCursor = dbHelper.selectAuto();
+        autoList = new ArrayList<>();
 
+        while (autoCursor.moveToNext()) {
+            String name = autoCursor.getString(autoCursor.getColumnIndex("accountName"));
+            autoList.add(name);
+        }
+        // AutoCompleteTextView 에 아답터를 연결한다.
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line,  autoList ));
+    }
 
 
     // TODO: Rename method, update argument and hook method into UI event

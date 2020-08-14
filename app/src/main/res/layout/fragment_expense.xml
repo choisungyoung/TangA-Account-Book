@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@color/colorCardView"
+                    android:background="@color/colorWhite"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="2020년 02월 25일"
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@color/colorCardView"
+                    android:background="@color/colorWhite"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="2020년 02월 25일"
@@ -90,7 +90,35 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/inputCardview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            app:cardCornerRadius="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
+                <AutoCompleteTextView
+                    android:id="@+id/searchEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:completionHint="자동완성됩니다."
+                    android:completionThreshold="0"
+                    android:ems="10"
+                    android:hint="검색어를 입력하세요." />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:id="@+id/listCardview"
             android:layout_width="match_parent"
@@ -105,7 +133,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorCardView"
+                android:background="@color/colorWhite"
                 android:orientation="vertical"
                 android:padding="10dp">
 

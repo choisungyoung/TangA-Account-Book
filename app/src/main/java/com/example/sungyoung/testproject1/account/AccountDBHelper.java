@@ -49,12 +49,16 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor selectAccountByDateByDate(String startDate, String endDate, String imex) {
+    public Cursor selectAccountByDateByDate(String startDate, String endDate, String imex, String accountName) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account where date >= ? and date <= ? and imex = ? order by date desc, _id;" ,  new String[]{startDate, endDate, imex});
+        String addQeury = "";
+        if(accountName != null && !"".equals(accountName)){
+            addQeury = "AND accountname like '%"+accountName+"%'";
+            Log.d("test", addQeury);
+        }
+        Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account where date >= ? and date <= ? and imex = ? "+addQeury+" order by date desc, _id;" ,  new String[]{startDate, endDate, imex});
         return cursor;
     }
-
     public Cursor selectAccountYest(String date) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT sum(price) sum, imex FROM (select imex, price from account where date < ?) group by imex;" ,  new String[]{date});
