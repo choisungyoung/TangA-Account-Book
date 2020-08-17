@@ -3,6 +3,7 @@ package com.example.sungyoung.testproject1.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ToggleButton;
 
 import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.Account;
+import com.example.sungyoung.testproject1.activity.AccountBookActivity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -21,8 +23,9 @@ public class ImexListviewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<Account> data;
     private int layout;
-
+    private Context context;
     public ImexListviewAdapter(Context context, int layout, ArrayList<Account> data) {
+        this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data = data;
         this.layout = layout;
@@ -67,7 +70,9 @@ public class ImexListviewAdapter extends BaseAdapter {
             accountName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             linearLayout.setEnabled(false);
             linearLayout.setPadding(0,5,0,5);
-            linearLayout.setBackgroundColor(Color.rgb(255,240,187));
+
+            ;
+            linearLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary2));
             return convertView;
         }
         if(listviewitem.getImex().equals("지출")){

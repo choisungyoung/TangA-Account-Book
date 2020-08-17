@@ -1,14 +1,18 @@
 package com.example.sungyoung.testproject1.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -31,6 +35,7 @@ import com.example.sungyoung.testproject1.activity.AccountBookActivity;
 import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.Account;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
+import com.example.sungyoung.testproject1.activity.MainActivity;
 import com.example.sungyoung.testproject1.adapter.ListviewAdapter;
 import com.example.sungyoung.testproject1.util.Util;
 
@@ -85,9 +90,9 @@ public class TodayFragment extends Fragment {
 
     //자동완성
     private AutoCompleteTextView autoCompleteTextView = null;
-
     public TodayFragment() {
     }
+
     public static TodayFragment newInstance(String param1, String param2) {
         TodayFragment fragment = new TodayFragment();
         Bundle args = new Bundle();
@@ -145,7 +150,7 @@ public class TodayFragment extends Fragment {
         autoCompleteTextView = (AutoCompleteTextView) acView.findViewById(R.id.accountEditText);
 
         initListener();
-
+        initFilter();
         showList();
         return view;
     }
@@ -390,6 +395,20 @@ public class TodayFragment extends Fragment {
                 .show();
     }
 
+    public void initFilter(){
+        autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!Character.isLetterOrDigit(source.charAt(i))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        },new InputFilter.LengthFilter(30)});
+        priceEditView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -412,7 +431,6 @@ public class TodayFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }
 
 class SpinnerAdapter extends ArrayAdapter<String> {

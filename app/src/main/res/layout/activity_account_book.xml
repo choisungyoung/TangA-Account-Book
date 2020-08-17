@@ -23,18 +23,58 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-        <ListView
-                android:id="@+id/drawer_menulist"
+        <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_gravity="right"
-                android:background="#ededed"
-                android:divider="#ededed"
-                android:dividerHeight="0dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:background="#ededed">
 
-        </ListView>
+            <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:text="보기"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+            <ListView
+                    android:id="@+id/drawer_menulist"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:divider="#ededed"
+                    android:dividerHeight="0dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="2"></ListView>
+            <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:text="설정"
+                    android:textSize="24dp"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+            <ListView
+                    android:id="@+id/drawer_settinglist"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:divider="#ededed"
+                    android:dividerHeight="0dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1"></ListView>
+
+        </LinearLayout>
+
+
     </android.support.v4.widget.DrawerLayout>
 
     <ImageView

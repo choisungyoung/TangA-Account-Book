@@ -258,19 +258,27 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/priceEditView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:hint="금액을 입력하세요."
-                        android:inputType="number" />
+                            android:id="@+id/priceEditView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="9"
+                            android:hint="금액을 입력하세요."
+                            android:inputType="number" />
+
+                    <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="원"
+                            android:textSize="18sp" />
 
                     <Button
                             android:id="@+id/confButton"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:background="@drawable/radius"
                             android:text="입력"
                             android:textColor="@color/colorWhite"

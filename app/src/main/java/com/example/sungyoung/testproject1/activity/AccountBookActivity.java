@@ -3,6 +3,7 @@ package com.example.sungyoung.testproject1.activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -27,14 +28,19 @@ import com.example.sungyoung.testproject1.account.AccountContract;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
 import com.example.sungyoung.testproject1.fragment.ExpenseFragment;
 import com.example.sungyoung.testproject1.fragment.TodayFragment;
+import com.example.sungyoung.testproject1.util.AES256Util;
 
 public class AccountBookActivity extends AppCompatActivity {
 
     public ListView menuListView = null;
+    public ListView settingListView = null;
     public TodayFragment tf;
     ImageView slidImageView = null;
     DrawerLayout drawer;
     private AccountDBHelper dbHelper;
+
+    private long backKeyPressedTime = 0;    //뒤로가기 누른시간
+    private Toast toast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,12 @@ public class AccountBookActivity extends AppCompatActivity {
         //메뉴리스트
         //final String[] items = {"기본 금리가 높은 순", "최대 우대 금리가 높은 순", "기간이 짧은 순", "기간이 긴 순", "최소 월 납입금액 순", "우대금리로 계산"};
         final ArrayAdapter menuAdapter = ArrayAdapter.createFromResource(this, R.array.menu_array, android.R.layout.simple_list_item_1);
+        final ArrayAdapter settingAdapter = ArrayAdapter.createFromResource(this, R.array.setting_array, android.R.layout.simple_list_item_1);
+
+        //로딩 화면
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
 
         tf = new TodayFragment();
         FragmentManager fm = getSupportFragmentManager();
@@ -54,8 +66,12 @@ public class AccountBookActivity extends AppCompatActivity {
 
         drawer = (DrawerLayout) findViewById(R.id.drawer) ;
         slidImageView = findViewById(R.id.slidImageView);
+
         menuListView = (ListView) findViewById(R.id.drawer_menulist);
         menuListView.setAdapter(menuAdapter);
+
+        settingListView = (ListView) findViewById(R.id.drawer_settinglist);
+        settingListView.setAdapter(settingAdapter);
 
         initListener();
     }
@@ -98,16 +114,44 @@ public class AccountBookActivity extends AppCompatActivity {
                         fragmentTransaction.replace(R.id.accountFragment, new ExpenseFragment());
                         //기간별 내역
                         break;
-                    case 2:
+                }
+
+                if (drawer.isDrawerOpen(GravityCompat.END)) {
+                    drawer.closeDrawer(GravityCompat.END);
+                }
+                fragmentTransaction.commit();
+            }
+        });
+
+        settingListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                switch (position) {
+                    case 0:
+                        break;
+                    case 1:
                         Cursor allData = dbHelper.selectAllData() ;
                         String str = allDataToString(allData);
+                        String encryptStr;
 
-                        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                        ClipData clipData = ClipData.newPlainText("accountBookData", str);
-                        clipboardManager.setPrimaryClip(clipData);
+                        try {
+                            encryptStr = AES256Util.Encrypt(str);
+
+                            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                            ClipData clipData = ClipData.newPlainText("accountBookData", encryptStr);
+                            clipboardManager.setPrimaryClip(clipData);
+                            Toast.makeText(getApplicationContext(), "클립보드에 복사되었습니다.", Toast.LENGTH_LONG);
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "암호화에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_LONG);
+                            e.printStackTrace();
+                        }
                         // 데이터 내보내기
                         break;
-                    case 3:
+                    case 2:
                         final EditText edittext = new EditText(AccountBookActivity.this);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(AccountBookActivity.this);
@@ -118,8 +162,16 @@ public class AccountBookActivity extends AppCompatActivity {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dbHelper.deleteAll();
-                                        setDataAll(edittext.getText().toString());
-                                        tf.showList();
+                                        String decryptStr;
+                                        try {
+                                            decryptStr = AES256Util.Decrypt(edittext.getText().toString());
+                                            setDataAll(decryptStr);
+                                            tf.showList();
+                                            Toast.makeText(getApplicationContext(), "데이터가 모두 입력되었습니다.", Toast.LENGTH_LONG);
+                                        } catch (Exception e) {
+                                            Toast.makeText(getApplicationContext(), "복호화에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_LONG);
+                                            e.printStackTrace();
+                                        }
                                     }
                                 });
 
@@ -133,7 +185,7 @@ public class AccountBookActivity extends AppCompatActivity {
                         // 데이터 불러오기
                         builder.show();
                         break;
-                    case 4:
+                    case 3:
                         //데이터 다지우기 (테스트용)
                         dbHelper.deleteAll();
                         tf.showList();
@@ -181,6 +233,28 @@ public class AccountBookActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(),"데이터가 추가되었습니다." ,Toast.LENGTH_LONG).show();
 
+    }
+
+    public void onBackPressed() {
+        // 기존 뒤로가기 버튼의 기능을 막기위해 주석처리 또는 삭제
+        // super.onBackPressed();
+
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간에 2초를 더해 현재시간과 비교 후
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간이 2초가 지났으면 Toast Show
+        // 2000 milliseconds = 2 seconds
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis();
+            toast = Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간에 2초를 더해 현재시간과 비교 후
+        // 마지막으로 뒤로가기 버튼을 눌렀던 시간이 2초가 지나지 않았으면 종료
+        // 현재 표시된 Toast 취소
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            finish();
+            toast.cancel();
+        }
     }
 /*
     @Override

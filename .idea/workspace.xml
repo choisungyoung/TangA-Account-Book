@@ -6,19 +6,27 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be4e958a-7004-4061-b9dd-96e54f689900" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/util/AES256Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/account/AccountDBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/account/AccountDBHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/activity/AccountBookActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/activity/AccountBookActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/activity/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/adapter/ImexListviewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/adapter/ImexListviewAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/ExpenseFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/ExpenseFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/TodayFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/TodayFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_account_book.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_account_book.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_expense.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_expense.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_today.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_today.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/array.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/array.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +49,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -171,22 +179,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="329" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1596376628711" />
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1597429388190">
+    <state width="1604" height="197" key="GridCell.Tab.0.bottom" timestamp="1597669707139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597429388190" />
-    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1597429388190">
+    <state width="1604" height="197" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597669707139" />
+    <state width="1604" height="197" key="GridCell.Tab.0.center" timestamp="1597669707139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597429388190" />
-    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1597429388190">
+    <state width="1604" height="197" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597669707139" />
+    <state width="1604" height="197" key="GridCell.Tab.0.left" timestamp="1597669707138">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597429388190" />
-    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1597429388190">
+    <state width="1604" height="197" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597669707138" />
+    <state width="1604" height="197" key="GridCell.Tab.0.right" timestamp="1597669707139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597429388190" />
+    <state width="1604" height="197" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597669707139" />
     <state x="754" y="297" key="chooseDestDirectoryDialog" timestamp="1597161706001">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -195,10 +203,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596382077843" />
-    <state x="681" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1597421405069">
+    <state x="681" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1597666010641">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="681" y="398" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597421405069" />
+    <state x="681" y="398" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597666010641" />
     <state x="764" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597428812923">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -207,9 +215,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="587" y="64" width="745" height="912" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1596981267853" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1597427073197">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1597675038983">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597427073197" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597675038983" />
   </component>
 </project>

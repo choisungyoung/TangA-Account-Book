@@ -2,12 +2,13 @@
 <resources>
     <color name="colorCardView">#FAFAFA</color>
     <color name="colorPrimary">#FFF6D4</color>
-    <color name="colorPrimary2">#FFF6BB</color>
-    <color name="colorPrimaryDark">#FFC107</color>
+    <color name="colorPrimary2">#FAD1CD</color>
+    <color name="colorPrimaryDark">#F47468</color>
     <color name="colorAccent">#FA5E50</color>
 
     <color name="colorBlack">#1A1A1A</color>
     <color name="colorGrayBlack">#313131</color>
     <color name="colorGray">#6B6B6B</color>
     <color name="colorWhite">#FFFFFF</color>
+
 </resources>

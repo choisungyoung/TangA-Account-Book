@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,7 @@ public class ExpenseFragment extends Fragment {
     TextView endDateText = null;
     TabLayout tabLaout = null;
     ListView listView = null;
+    Button searchButton = null;
 
     //자동완성
     private AutoCompleteTextView autoCompleteTextView = null;
@@ -79,14 +82,17 @@ public class ExpenseFragment extends Fragment {
 
         //자동완성
         autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.searchEditText);
+        searchButton = view.findViewById(R.id.searchButton);    //검색버튼 초기화
         endDateText.setText(endDate);
         startDateText.setText(startDate);
 
         initAutoComplete();
         initListener();
+        initFilter();
         selectAccount(tabLaout.getSelectedTabPosition());
         return view;
     }
+
     public void initListener(){
         //날짜 리스너
         startDateText.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +181,14 @@ public class ExpenseFragment extends Fragment {
                 }
             }
         });
+        //검색버튼 리스너 추가
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectAccount(tabLaout.getSelectedTabPosition());
+            }
+        });
+        /*//입력과 동시에 검색
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override //입력하기 전에 호출되는 API
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -184,7 +198,7 @@ public class ExpenseFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable editable) { }
-        });
+        });*/
     }
 
     public void selectAccount(int position){
@@ -227,6 +241,20 @@ public class ExpenseFragment extends Fragment {
         // AutoCompleteTextView 에 아답터를 연결한다.
         autoCompleteTextView.setAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line,  autoList ));
+    }
+
+    public void initFilter(){
+        autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!Character.isLetterOrDigit(source.charAt(i))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        },new InputFilter.LengthFilter(30)});
     }
 
 
