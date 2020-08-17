@@ -27,6 +27,7 @@ import com.example.sungyoung.testproject1.account.Account;
 import com.example.sungyoung.testproject1.account.AccountContract;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
 import com.example.sungyoung.testproject1.fragment.ExpenseFragment;
+import com.example.sungyoung.testproject1.fragment.SearchFragment;
 import com.example.sungyoung.testproject1.fragment.TodayFragment;
 import com.example.sungyoung.testproject1.util.AES256Util;
 
@@ -112,6 +113,10 @@ public class AccountBookActivity extends AppCompatActivity {
                         break;
                     case 1:
                         fragmentTransaction.replace(R.id.accountFragment, new ExpenseFragment());
+                        //기간별 내역
+                        break;
+                    case 2:
+                        fragmentTransaction.replace(R.id.accountFragment, new SearchFragment());
                         //기간별 내역
                         break;
                 }

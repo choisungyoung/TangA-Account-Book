@@ -79,7 +79,7 @@ public class ImexListviewAdapter extends BaseAdapter {
             price.setTextColor(Color.RED);
         }
         accountName.setText(listviewitem.getAccountName());
-        price.setText(format.format(Integer.parseInt(listviewitem.getPrice())) + " 원");
+        price.setText(format.format(Long.parseLong(listviewitem.getPrice())) + " 원");
         hidden.setText(listviewitem.getId());
         return convertView;
     }

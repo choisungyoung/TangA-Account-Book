@@ -275,15 +275,15 @@ public class TodayFragment extends Fragment {
         Log.d("test@",dateText.getText().toString());
         Cursor cursor = dbHelper.selectAccountByDate(dateText.getText().toString());
         ArrayList<Account> list = new ArrayList<>();
-        int im = 0;
-        int ex = 0;
+        long im = 0;
+        long ex = 0;
         while (cursor.moveToNext()) {
             String imex = cursor.getString(cursor.getColumnIndex("imex"));
             String price = cursor.getString(cursor.getColumnIndex("price"));
             if(imex.equals("지출")){
-                ex += Integer.parseInt(price);
+                ex += Long.parseLong(price);
             }else if(imex.equals("수입")){
-                im += Integer.parseInt(price);
+                im += Long.parseLong(price);
             }
             if(!imex.equals(tabLaout.getTabAt(tabLaout.getSelectedTabPosition()).getText().toString())){
                 continue;

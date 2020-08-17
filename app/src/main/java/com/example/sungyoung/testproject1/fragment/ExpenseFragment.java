@@ -204,7 +204,7 @@ public class ExpenseFragment extends Fragment {
     public void selectAccount(int position){
         String imex1 = position == 0 ? "지출" : "수입";
 
-        Cursor cursor = dbHelper.selectAccountByDateByDate(startDateText.getText().toString(), endDateText.getText().toString(), imex1, autoCompleteTextView.getText().toString());
+        Cursor cursor = dbHelper.selectAccountByDateNname(startDateText.getText().toString(), endDateText.getText().toString(), imex1, autoCompleteTextView.getText().toString());
         ArrayList<Account> aList = new ArrayList<>();
 
         String curDate = "";

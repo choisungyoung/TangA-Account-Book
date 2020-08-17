@@ -53,7 +53,7 @@ public class ListviewAdapter extends BaseAdapter {
         accountName.setText(listviewitem.getAccountName());
 
         TextView price = convertView.findViewById(R.id.price);
-        price.setText(format.format(Integer.parseInt(listviewitem.getPrice())) + " 원");
+        price.setText(format.format(Long.parseLong(listviewitem.getPrice())) + " 원");
 
         if (listviewitem.getImex().equals("지출")) {
             price.setTextColor(Color.RED);
