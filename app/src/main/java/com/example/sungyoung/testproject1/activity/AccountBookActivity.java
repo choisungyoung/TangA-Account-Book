@@ -183,8 +183,16 @@ public class AccountBookActivity extends AppCompatActivity {
                         builder.setNegativeButton("추가하기",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        setDataAll(edittext.getText().toString());
-                                        tf.showList();
+                                        String decryptStr;
+                                        try {
+                                            decryptStr = AES256Util.Decrypt(edittext.getText().toString());
+                                            setDataAll(decryptStr);
+                                            tf.showList();
+                                            Toast.makeText(getApplicationContext(), "데이터가 모두 입력되었습니다.", Toast.LENGTH_LONG);
+                                        } catch (Exception e) {
+                                            Toast.makeText(getApplicationContext(), "복호화에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_LONG);
+                                            e.printStackTrace();
+                                        }
                                     }
                                 });
                         // 데이터 불러오기
@@ -204,7 +212,6 @@ public class AccountBookActivity extends AppCompatActivity {
             }
         });
     }
-
     public String allDataToString(Cursor cursor){
         String imex = null;
         String price = null;

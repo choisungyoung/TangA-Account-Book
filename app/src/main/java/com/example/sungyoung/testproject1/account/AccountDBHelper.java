@@ -59,14 +59,14 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account where date >= ? and date <= ? and imex = ? "+addQeury+" order by date desc, _id;" ,  new String[]{startDate, endDate, imex});
         return cursor;
     }
-    public Cursor selectAccountByName(String imex, String accountName) {
+    public Cursor selectAccountByName(String accountName) {
         SQLiteDatabase db = getReadableDatabase();
         String addQeury = "";
         if(accountName != null && !"".equals(accountName)){
             addQeury = "AND accountname like '%"+accountName+"%'";
             Log.d("test", addQeury);
         }
-        Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account where imex = ? "+addQeury+" order by date desc, _id;" ,  new String[]{imex});
+        Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account where 1 = 1 "+addQeury+" order by date desc, _id;" ,  new String[]{});
         return cursor;
     }
     public Cursor selectAccountByDateNname(String startDate, String endDate, String imex, String accountName) {

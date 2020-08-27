@@ -36,7 +36,6 @@ import java.util.Locale;
 
 public class SearchFragment extends Fragment {
     AccountBookActivity accountBookActivity = null;
-    TabLayout tabLaout = null;
     ListView listView = null;
     Button searchButton = null;
 
@@ -70,7 +69,6 @@ public class SearchFragment extends Fragment {
         String startDate = dateFormat.format(date);
 
         dbHelper = new AccountDBHelper(getContext());
-        tabLaout = view.findViewById(R.id.tabLaout);
         listView = view.findViewById(R.id.listView);
 
         //자동완성
@@ -80,26 +78,11 @@ public class SearchFragment extends Fragment {
         initAutoComplete();
         initListener();
         initFilter();
-        selectAccount(tabLaout.getSelectedTabPosition());
+        selectAccount();
         return view;
     }
 
     public void initListener(){
-        //날짜 리스너
-        tabLaout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                selectAccount(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         //자동완성 클릭이벤트
         autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
@@ -126,15 +109,14 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAccount(tabLaout.getSelectedTabPosition());
+                selectAccount();
             }
         });
     }
 
-    public void selectAccount(int position){
-        String imex1 = position == 0 ? "지출" : "수입";
+    public void selectAccount(){
 
-        Cursor cursor = dbHelper.selectAccountByName(imex1, autoCompleteTextView.getText().toString());
+        Cursor cursor = dbHelper.selectAccountByName( autoCompleteTextView.getText().toString());
         ArrayList<Account> aList = new ArrayList<>();
 
         String curDate = "";

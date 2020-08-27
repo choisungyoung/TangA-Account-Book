@@ -75,7 +75,6 @@
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="10dp">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -83,21 +82,6 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <android.support.design.widget.TabLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tabLaout"
-                    app:tabTextAppearance="@style/tab_text">
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="지출" />
-
-                    <android.support.design.widget.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="수입" />
-                </android.support.design.widget.TabLayout>
                 <ListView
                     android:id="@+id/listView"
                     android:layout_width="match_parent"
