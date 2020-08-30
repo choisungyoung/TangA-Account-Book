@@ -344,7 +344,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="어  제"
+                    android:text="이  전"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="1dp"/>
+
+            <Button
+                    android:id="@+id/todayButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="오  늘"
                     android:background="@color/colorAccent"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
@@ -360,7 +372,8 @@
                     android:background="@color/colorAccent"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    />
         </LinearLayout>
 
     </LinearLayout>

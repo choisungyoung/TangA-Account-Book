@@ -15,10 +15,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +28,9 @@ import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.Account;
 import com.example.sungyoung.testproject1.account.AccountContract;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
+import com.example.sungyoung.testproject1.fragment.DiaryFragment;
 import com.example.sungyoung.testproject1.fragment.ExpenseFragment;
+import com.example.sungyoung.testproject1.fragment.HelpFragment;
 import com.example.sungyoung.testproject1.fragment.SearchFragment;
 import com.example.sungyoung.testproject1.fragment.TodayFragment;
 import com.example.sungyoung.testproject1.util.AES256Util;
@@ -119,6 +123,10 @@ public class AccountBookActivity extends AppCompatActivity {
                         fragmentTransaction.replace(R.id.accountFragment, new SearchFragment());
                         //기간별 내역
                         break;
+                    case 3:
+                        fragmentTransaction.replace(R.id.accountFragment, new DiaryFragment());
+                        //다이어리
+                        break;
                 }
 
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
@@ -137,6 +145,8 @@ public class AccountBookActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 switch (position) {
                     case 0:
+                        // 도움말
+                        fragmentTransaction.replace(R.id.accountFragment, new HelpFragment());
                         break;
                     case 1:
                         Cursor allData = dbHelper.selectAllData() ;
@@ -159,6 +169,10 @@ public class AccountBookActivity extends AppCompatActivity {
                     case 2:
                         final EditText edittext = new EditText(AccountBookActivity.this);
 
+                        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        p.height = 200;
+                        edittext.setLayoutParams(p);
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(AccountBookActivity.this);
                         builder.setTitle("데이터 가져오기");
                         builder.setMessage("내보내기한 데이터를 붙여넣어 주세요.");
@@ -169,7 +183,7 @@ public class AccountBookActivity extends AppCompatActivity {
                                         dbHelper.deleteAll();
                                         String decryptStr;
                                         try {
-                                            decryptStr = AES256Util.Decrypt(edittext.getText().toString());
+                                            decryptStr = AES256Util.Decrypt(edittext.getText().toString().replaceAll("\n\b", ""));
                                             setDataAll(decryptStr);
                                             tf.showList();
                                             Toast.makeText(getApplicationContext(), "데이터가 모두 입력되었습니다.", Toast.LENGTH_LONG);
@@ -185,7 +199,7 @@ public class AccountBookActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         String decryptStr;
                                         try {
-                                            decryptStr = AES256Util.Decrypt(edittext.getText().toString());
+                                            decryptStr = AES256Util.Decrypt(edittext.getText().toString().replaceAll("\n\b", ""));
                                             setDataAll(decryptStr);
                                             tf.showList();
                                             Toast.makeText(getApplicationContext(), "데이터가 모두 입력되었습니다.", Toast.LENGTH_LONG);

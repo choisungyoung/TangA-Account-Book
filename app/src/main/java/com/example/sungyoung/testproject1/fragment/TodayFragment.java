@@ -65,6 +65,7 @@ public class TodayFragment extends Fragment {
 
     public Button confButton;
     public Button yestButton;
+    public Button todayButton;
     public Button tomorrowButton;
 
     public TextView dateText;
@@ -144,6 +145,7 @@ public class TodayFragment extends Fragment {
 
         confButton = view.findViewById(R.id.confButton);
         yestButton = view.findViewById(R.id.yestButton);
+        todayButton = view.findViewById(R.id.todayButton);
         tomorrowButton = view.findViewById(R.id.tomorrowButton);
 
         //자동완성
@@ -207,6 +209,19 @@ public class TodayFragment extends Fragment {
                     Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
                 else{
                     date = new Date(date.getTime()+(1000*60*60*24*-1));
+                    dateText.setText(dateFormat.format(date));
+                    showList();
+                }
+            }
+        });
+        //오늘버튼
+        todayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date date = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
+                if(date==null)
+                    Toast.makeText(getActivity(), autoList.toArray().toString(), Toast.LENGTH_SHORT);
+                else{
                     dateText.setText(dateFormat.format(date));
                     showList();
                 }
