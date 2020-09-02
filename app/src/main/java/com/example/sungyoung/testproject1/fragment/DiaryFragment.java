@@ -1,6 +1,7 @@
 package com.example.sungyoung.testproject1.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,13 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sungyoung.testproject1.R;
+import com.example.sungyoung.testproject1.dialog.MemoDialog;
 import com.example.sungyoung.testproject1.util.Util;
 
 import java.text.SimpleDateFormat;
@@ -45,6 +49,7 @@ public class DiaryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
         init(view);
+        initCalendar();
         initListener();
         return view;
     }
@@ -57,17 +62,39 @@ public class DiaryFragment extends Fragment {
 
         gridView = (GridView)view.findViewById(R.id.cal_gridview);
 
-        initCalendar();
     }
     public void initListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //메모 다이얼로그 오픈
+                final View innerView = getLayoutInflater().inflate(R.layout.dialog_memo, null);
 
+                MemoDialog mmoDialog = new MemoDialog(getContext());
+                mmoDialog.setCanceledOnTouchOutside(true);
+                mmoDialog.setCancelable(true);
+                mmoDialog.setContentView(innerView);
+                mmoDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+                mmoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        Log.d("test111", "11111");                    }
+                });
+
+                mmoDialog.show();
+            }
+        });
     }
 
     public void initCalendar(){
+        Date todayDate = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
+        String curMonthStr = simpleDateFormat.format(todayDate);
+
         Calendar calendar = Calendar.getInstance();
-        currentMonth.setText("2020년 08월");
-        String today = currentMonth.getText().toString() + " 01일";
-        Date date = Util.getStringToDate(today);
+        currentMonth.setText(curMonthStr);
+        String startDay = currentMonth.getText().toString() + " 01일";
+        Date date = Util.getStringToDate(startDay);
 
         calendar.setTime(date);
         int weekIndex = calendar.get(Calendar.DAY_OF_WEEK); //요일
@@ -77,7 +104,7 @@ public class DiaryFragment extends Fragment {
 
         calGridAdapter = new CalGridAdapter();
 
-        for(int i = 0 ; i < weekIndex ; i++){
+        for(int i = 1 ; i < weekIndex ; i++){
             calGridAdapter.addItem(new CalGridItem("",""));
         }
 
@@ -89,6 +116,16 @@ public class DiaryFragment extends Fragment {
             calGridAdapter.addItem(new CalGridItem( Integer.toString(i), "메모@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + i));
         }
 
+        //나머지칸 채우기
+        int filledDay = (weekIndex + finishDate - 1);
+        if(filledDay > 35){
+            filledDay = 42 -filledDay;
+        }else{
+            filledDay = 35 -filledDay;
+        }
+        for(int i = 1 ; i <= filledDay  ; i++){
+            calGridAdapter.addItem(new CalGridItem( "0"+Integer.toString(i), ""));
+        }
 
         gridView.setAdapter(calGridAdapter);
     }
@@ -122,18 +159,18 @@ public class DiaryFragment extends Fragment {
             boolean isToday = false;
 
             String selDate = currentMonth.getText().toString();
-            Log.d("test111 selDate", selDate);
             Date date = new Date();
             String today = simpleDateFormat.format(date);
-            Log.d("test111 today", today);
 
             calendar.setTime(date);
             String day = Integer.toString(calendar.get(Calendar.DATE));   // 출력 형식을 지정해줍니다.
 
-            Log.d("test111 day", day);
-            if(today.equals(selDate) && day.equals(items.get(i).getDay())){
+            if(today.contains(selDate) && day.equals(items.get(i).getDay())){
                 isToday = true;
-                Log.d("test111 isToday", "true");
+            }
+
+            if(items.get(i).getDay().startsWith("0")){
+                items.get(i).setDay(items.get(i).getDay().substring(1));
             }
 
             calGridViewer.setItem(items.get(i), isToday);
@@ -175,6 +212,7 @@ class CalGridViewer extends LinearLayout {
         if(isToday){
             textView.setTextColor(Color.BLACK);
             textView.setTypeface(null, Typeface.BOLD);
+            dateoutter.setBackgroundResource(R.drawable.border_red);
         }
     }
 }

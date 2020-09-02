@@ -9,91 +9,110 @@
 
     <LinearLayout
             android:id="@+id/buttonlayout"
-            android:layout_width="fill_parent"
-            android:layout_height="60sp"
-            android:gravity="left|top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:height="60sp"
-            android:orientation="horizontal" >
+            android:gravity="left|top"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
         <LinearLayout
-                android:layout_width="50dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"></LinearLayout>
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:gravity="center">
 
             <ImageView
                     android:id="@+id/prevYear"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="25sp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/pre_year_button" >
-            </ImageView>
+                    android:src="@mipmap/pre_year_button"></ImageView>
         </LinearLayout>
 
         <LinearLayout
-                android:layout_width="50dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:gravity="center">
+
             <ImageView
                     android:id="@+id/prevMonth"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="25sp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/pre_month_button" >
-            </ImageView>
+                    android:src="@mipmap/pre_month_button"></ImageView>
         </LinearLayout>
 
         <TextView
                 android:id="@+id/currentMonth"
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.6"
+                android:layout_weight="5"
                 android:gravity="center"
                 android:text="2020년 08월 30일"
+                android:textColor="@color/colorBlack"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack">
-        </TextView>
+                android:textStyle="bold"></TextView>
 
         <LinearLayout
-                android:layout_width="50dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:gravity="center">
 
             <ImageView
                     android:id="@+id/nextMonth"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="25sp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/next_month_button" >
-            </ImageView>
+                    android:src="@mipmap/next_month_button"></ImageView>
 
         </LinearLayout>
 
         <LinearLayout
-                android:layout_width="50dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:gravity="center">
+
             <ImageView
                     android:id="@+id/nextYear"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="25sp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/next_year_button" >
-            </ImageView>
+                    android:src="@mipmap/next_year_button"></ImageView>
         </LinearLayout>
 
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1.5"></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="30dp"
-            android:background="#e0e7ee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary2"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
         <TextView
                 android:layout_width="0dp"
@@ -169,7 +188,7 @@
     <GridView
             android:id="@+id/cal_gridview"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:numColumns="7" >
     </GridView>
 

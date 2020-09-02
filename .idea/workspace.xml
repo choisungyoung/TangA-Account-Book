@@ -12,25 +12,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be4e958a-7004-4061-b9dd-96e54f689900" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/DiaryFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/HelpFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/calgriditem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_diary.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_help.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/next_button.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/next_month_button.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/next_year_button.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/pre_button.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/pre_month_button.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/pre_year_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/dialog/MemoDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/border_black.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/border_red.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_memo.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/activity/AccountBookActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/activity/AccountBookActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/TodayFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/TodayFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/DiaryFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sungyoung/testproject1/fragment/DiaryFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/calgriditem.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/calgriditem.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_diary.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_diary.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_today.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_today.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/array.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/array.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,19 +68,20 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\layout" />
-      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\mipmap-xxhdpi" />
-      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\mipmap-xhdpi" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.sungyoung.testproject1.fragment" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\mipmap-xhdpi" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\drawable" />
+      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\layout" />
+      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res\mipmap-xxhdpi" />
+      <recent name="C:\Users\Com\AndroidStudioProjects\MyApplication\app\src\main\res" />
     </key>
   </component>
   <component name="RunManager">
@@ -168,9 +162,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="676" y="164" key="#app/0.0.1920.1040@0.0.1920.1040" timestamp="1596381088418" />
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1598793112600">
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1599057096877">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.401.1920.1040@0.0.1920.1040" timestamp="1599057096877" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1598793112600" />
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1596382800542">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -212,10 +207,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1596382077843" />
-    <state x="681" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1598787548762">
+    <state x="681" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1599050336306">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="681" y="398" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598787548762" />
+    <state x="681" y="398" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.401.1920.1040@0.0.1920.1040" timestamp="1599050336306" />
+    <state x="681" y="398" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598876503365" />
     <state x="764" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597428812923">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -228,10 +224,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="587" y="64" width="745" height="912" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1596981267853" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1597675038983">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1598877855054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597675038983" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1598877855054" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1598796540283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
