@@ -173,6 +173,7 @@ public class AccountBookActivity extends AppCompatActivity {
                         p.height = 200;
                         edittext.setLayoutParams(p);
 
+                        edittext.setMaxHeight(400);
                         AlertDialog.Builder builder = new AlertDialog.Builder(AccountBookActivity.this);
                         builder.setTitle("데이터 가져오기");
                         builder.setMessage("내보내기한 데이터를 붙여넣어 주세요.");
@@ -216,6 +217,14 @@ public class AccountBookActivity extends AppCompatActivity {
                         //데이터 다지우기 (테스트용)
                         dbHelper.deleteAll();
                         tf.showList();
+                        break;
+                    case 4:
+                        //데이터 다지우기 (테스트용)
+                        dbHelper.dropAccount();
+                        break;
+                    case 5:
+                        //데이터 다지우기 (테스트용)
+                        dbHelper.dropDiary();
                         break;
                 }
 

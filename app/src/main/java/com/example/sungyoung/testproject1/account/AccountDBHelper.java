@@ -14,11 +14,15 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
     public AccountDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL(AccountContract.AccountEntry.SQL_CREATE_TABLE); // 테이블 생성
+        db.execSQL(AccountContract.DiaryEntry.SQL_CREATE_TABLE); // 테이블 생성
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(AccountContract.AccountEntry.SQL_CREATE_TABLE); // 테이블 생성
+        sqLiteDatabase.execSQL(AccountContract.DiaryEntry.SQL_CREATE_TABLE); // 테이블 생성
     }
 
     @Override
@@ -105,5 +109,43 @@ public class AccountDBHelper extends SQLiteOpenHelper {
             String price = cursor.getString(cursor.getColumnIndex("price"));
             Log.d("test", "price : " + price);
         }
+    }
+
+    public Cursor selectMemo(String date) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT memo FROM diary WHERE date = ?;" ,  new String[]{date});
+        return cursor;
+    }
+    public Cursor updateMemo(String date, String memo){
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT memo FROM diary WHERE date = ? ;" ,  new String[]{date});
+        if(cursor.getCount() != 0){
+            Log.d("updateMemo", Integer.toString(cursor.getCount()) );
+            Log.d("updateMemo", date );
+            Log.d("updateMemo", memo );
+
+            ContentValues values = new ContentValues();
+            values.put(AccountContract.DiaryEntry.COLUMN_MEMO, memo);
+            db.update(AccountContract.DiaryEntry.TABLE_NAME, values, "date=?",new String[]{date});
+            //db1.rawQuery("UPDATE diary SET memo = ? where date = ? ;" ,  new String[]{memo, date});
+        }
+        else{
+            ContentValues values = new ContentValues();
+            values.put(AccountContract.DiaryEntry.COLUMN_DATE, date);
+            values.put(AccountContract.DiaryEntry.COLUMN_MEMO, memo);
+            db.insert(AccountContract.DiaryEntry.TABLE_NAME, null, values);
+        }
+
+        return cursor;
+    }
+
+    public void dropAccount(){
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL(AccountContract.AccountEntry.SQL_DELETE_TABLE);
+    }
+    public void dropDiary(){
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL(AccountContract.DiaryEntry.SQL_DELETE_TABLE);
     }
 }

@@ -2,6 +2,7 @@ package com.example.sungyoung.testproject1.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,10 +18,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sungyoung.testproject1.R;
+import com.example.sungyoung.testproject1.account.AccountDBHelper;
 import com.example.sungyoung.testproject1.dialog.MemoDialog;
 import com.example.sungyoung.testproject1.util.Util;
 
@@ -30,9 +34,17 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DiaryFragment extends Fragment {
+    private AccountDBHelper dbHelper;
+
     private CalGridAdapter calGridAdapter;
     private GridView gridView;
     private TextView currentMonth;
+    private ImageView prevYearBtn;
+    private ImageView prevMonthBtn;
+    private ImageView nextYearBtn;
+    private ImageView nextMonthBtn;
+
+
     String pattern = "yyyy년 MM월";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);  // 출력용으로 쓸 데이트 포맷
     public DiaryFragment() {
@@ -55,6 +67,7 @@ public class DiaryFragment extends Fragment {
     }
 
     public void init(View view){
+        dbHelper = new AccountDBHelper(getContext());
         currentMonth = (TextView) view.findViewById(R.id.currentMonth);
         Date today = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
         String todayStr = simpleDateFormat.format(today);
@@ -62,37 +75,105 @@ public class DiaryFragment extends Fragment {
 
         gridView = (GridView)view.findViewById(R.id.cal_gridview);
 
+        prevYearBtn = (ImageView) view.findViewById(R.id.prevYear);
+        prevMonthBtn = (ImageView) view.findViewById(R.id.prevMonth);
+        nextYearBtn = (ImageView) view.findViewById(R.id.nextYear);
+        nextMonthBtn = (ImageView) view.findViewById(R.id.nextMonth);
+
     }
     public void initListener() {
+        prevYearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String curYear = currentMonth.getText().toString();
+                Calendar calendar = Calendar.getInstance();
+                Date date = Util.getStringToDate(curYear + " 01일");
+                calendar.setTime(date);
+                calendar.add(calendar.YEAR, -1);
+                calendar.getTime();
+                String prevYear = simpleDateFormat.format(calendar.getTime());
+                currentMonth.setText(prevYear);
+
+                initCalendar();
+            }
+        });
+        prevMonthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String curMonth = currentMonth.getText().toString();
+                Calendar calendar = Calendar.getInstance();
+                Date date = Util.getStringToDate(curMonth + " 01일");
+                calendar.setTime(date);
+                calendar.add(calendar.MONTH, -1);
+                calendar.getTime();
+                String prevMonth = simpleDateFormat.format(calendar.getTime());
+                currentMonth.setText(prevMonth);
+
+                initCalendar();
+            }
+        });
+
+        nextYearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String curYear = currentMonth.getText().toString();
+                Calendar calendar = Calendar.getInstance();
+                Date date = Util.getStringToDate(curYear + " 01일");
+                calendar.setTime(date);
+                calendar.add(calendar.YEAR, +1);
+                calendar.getTime();
+                String nextYear = simpleDateFormat.format(calendar.getTime());
+                currentMonth.setText(nextYear);
+
+                initCalendar();
+            }
+        });
+        nextMonthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String curMonth = currentMonth.getText().toString();
+                Calendar calendar = Calendar.getInstance();
+                Date date = Util.getStringToDate(curMonth + " 01일");
+                calendar.setTime(date);
+                calendar.add(calendar.MONTH, +1);
+                calendar.getTime();
+                String prevMonth = simpleDateFormat.format(calendar.getTime());
+                currentMonth.setText(prevMonth);
+
+                initCalendar();
+            }
+        });
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //메모 다이얼로그 오픈
-                final View innerView = getLayoutInflater().inflate(R.layout.dialog_memo, null);
+                TextView curDay = (TextView)view.findViewById(R.id.day);
+                String curDate = currentMonth.getText().toString() + " " + curDay.getText().toString() + "일";
 
-                MemoDialog mmoDialog = new MemoDialog(getContext());
+                final View innerView = getLayoutInflater().inflate(R.layout.dialog_memo, null);
+                MemoDialog mmoDialog = new MemoDialog(getContext(), curDate);
                 mmoDialog.setCanceledOnTouchOutside(true);
                 mmoDialog.setCancelable(true);
                 mmoDialog.setContentView(innerView);
                 mmoDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
+                mmoDialog.show();
                 mmoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        Log.d("test111", "11111");                    }
+                        initCalendar();
+                    }
                 });
-
-                mmoDialog.show();
             }
         });
+
+
     }
 
     public void initCalendar(){
-        Date todayDate = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
-        String curMonthStr = simpleDateFormat.format(todayDate);
 
         Calendar calendar = Calendar.getInstance();
-        currentMonth.setText(curMonthStr);
         String startDay = currentMonth.getText().toString() + " 01일";
         Date date = Util.getStringToDate(startDay);
 
@@ -112,8 +193,14 @@ public class DiaryFragment extends Fragment {
     *  db에서 메모 들고오기
     * */
 
+        Cursor cursor;
         for(int i = 1 ; i <= finishDate ; i++){
-            calGridAdapter.addItem(new CalGridItem( Integer.toString(i), "메모@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + i));
+            cursor = dbHelper.selectMemo(currentMonth.getText().toString() + " "+i+"일");
+            String memo = "";
+            if(cursor.moveToNext()){
+                memo = cursor.getString(cursor.getColumnIndex("memo"));
+            }
+            calGridAdapter.addItem(new CalGridItem( Integer.toString(i), memo));
         }
 
         //나머지칸 채우기
@@ -181,8 +268,8 @@ public class DiaryFragment extends Fragment {
 
 class CalGridViewer extends LinearLayout {
 
-    TextView textView;
-    TextView textView2;
+    TextView day;
+    TextView memo;
     LinearLayout dateoutter;
     public CalGridViewer(Context context) {
         super(context);
@@ -200,18 +287,18 @@ class CalGridViewer extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.calgriditem, this,true);
         dateoutter = (LinearLayout)findViewById(R.id.dateoutter);
-        textView = (TextView)findViewById(R.id.textView);
-        textView2 = (TextView)findViewById(R.id.textView2);
+        day = (TextView)findViewById(R.id.day);
+        memo = (TextView)findViewById(R.id.memo);
     }
 
     public void setItem(CalGridItem singerItem, boolean isToday){
 
-        textView.setText(singerItem.getDay());
-        textView2.setText(singerItem.getMemo());
+        day.setText(singerItem.getDay());
+        memo.setText(singerItem.getMemo());
 
         if(isToday){
-            textView.setTextColor(Color.BLACK);
-            textView.setTypeface(null, Typeface.BOLD);
+            day.setTextColor(Color.BLACK);
+            day.setTypeface(null, Typeface.BOLD);
             dateoutter.setBackgroundResource(R.drawable.border_red);
         }
     }

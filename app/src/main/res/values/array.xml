@@ -15,6 +15,8 @@
         <item>도움말</item>
         <item>데이터 내보내기</item>
         <item>데이터 불러오기</item>
-        <!--<item>데이터 다지우기(개발)</item>-->
+        <item>데이터 다지우기(개발)</item>
+        <item>Account테이블 지우기(개발)</item>
+        <item>Diary테이블 지우기(개발)</item>
     </string-array>
 </resources>
