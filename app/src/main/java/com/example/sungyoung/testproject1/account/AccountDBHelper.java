@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.example.sungyoung.testproject1.util.Util;
+
+import java.util.Date;
+
 public class AccountDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "database";
     public static final int DATABASE_VERSION = 1;
@@ -99,21 +103,15 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         db.execSQL("delete FROM account where _id=? ;" ,new String[]{id});
     }
-    public void deleteAll(){
-        SQLiteDatabase db = getReadableDatabase();
-        db.execSQL("delete FROM account ;" );
-
-        Cursor cursor= db.rawQuery("select price FROM account ;" , null);
-
-        while (cursor.moveToNext()) {
-            String price = cursor.getString(cursor.getColumnIndex("price"));
-            Log.d("test", "price : " + price);
-        }
-    }
-
     public Cursor selectMemo(String date) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT memo FROM diary WHERE date = ?;" ,  new String[]{date});
+        return cursor;
+    }
+    public Cursor selectDiaryLikeMemo(String memo) {
+        SQLiteDatabase db = getReadableDatabase();
+        memo = "%"+memo+"%";
+        Cursor cursor = db.rawQuery("SELECT date FROM diary WHERE memo like ? ;" ,  new String[]{memo});
         return cursor;
     }
     public Cursor updateMemo(String date, String memo){
@@ -121,14 +119,10 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT memo FROM diary WHERE date = ? ;" ,  new String[]{date});
         if(cursor.getCount() != 0){
-            Log.d("updateMemo", Integer.toString(cursor.getCount()) );
-            Log.d("updateMemo", date );
-            Log.d("updateMemo", memo );
 
             ContentValues values = new ContentValues();
             values.put(AccountContract.DiaryEntry.COLUMN_MEMO, memo);
             db.update(AccountContract.DiaryEntry.TABLE_NAME, values, "date=?",new String[]{date});
-            //db1.rawQuery("UPDATE diary SET memo = ? where date = ? ;" ,  new String[]{memo, date});
         }
         else{
             ContentValues values = new ContentValues();
@@ -138,6 +132,40 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         }
 
         return cursor;
+    }
+
+    public void printAccountData(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account ;" ,  null);
+
+        while(cursor.moveToNext()){
+            String id = cursor.getString(cursor.getColumnIndex("_id"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            String accountName = cursor.getString(cursor.getColumnIndex("accountName"));
+            String price = cursor.getString(cursor.getColumnIndex("price"));
+            String imex = cursor.getString(cursor.getColumnIndex("imex"));
+
+            Log.d("printAccountData", id +", \t" + date +", \t" + accountName +", \t" + price +", \t" + imex );
+        }
+    }
+    public void printDiaryData(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT date, memo FROM diary ;" ,  null);
+
+        while(cursor.moveToNext()){
+            String memo = cursor.getString(cursor.getColumnIndex("memo"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+
+            Log.d("printAccountData",  date +", \t" + memo );
+        }
+    }
+    public void deleteAllAccount(){
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL("delete FROM account ;" );
+    }
+    public void deleteAllDiary(){
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL("delete FROM diary ;" );
     }
 
     public void dropAccount(){

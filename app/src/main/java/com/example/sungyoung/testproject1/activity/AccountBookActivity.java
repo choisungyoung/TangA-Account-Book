@@ -181,7 +181,7 @@ public class AccountBookActivity extends AppCompatActivity {
                         builder.setPositiveButton("덮어쓰기",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        dbHelper.deleteAll();
+                                        dbHelper.deleteAllAccount();
                                         String decryptStr;
                                         try {
                                             decryptStr = AES256Util.Decrypt(edittext.getText().toString().replaceAll("\n\b", ""));
@@ -214,15 +214,24 @@ public class AccountBookActivity extends AppCompatActivity {
                         builder.show();
                         break;
                     case 3:
-                        //데이터 다지우기 (테스트용)
-                        dbHelper.deleteAll();
-                        tf.showList();
+                        dbHelper.printAccountData();
                         break;
                     case 4:
+                        dbHelper.printDiaryData();
+                        break;
+                    case 5:
+                        //데이터 다지우기 (테스트용)
+                        dbHelper.deleteAllAccount();
+                        break;
+                    case 6:
+                        //데이터 다지우기 (테스트용)
+                        dbHelper.deleteAllDiary();
+                        break;
+                    case 7:
                         //데이터 다지우기 (테스트용)
                         dbHelper.dropAccount();
                         break;
-                    case 5:
+                    case 8:
                         //데이터 다지우기 (테스트용)
                         dbHelper.dropDiary();
                         break;

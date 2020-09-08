@@ -1,13 +1,16 @@
 package com.example.sungyoung.testproject1.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,26 +33,38 @@ import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
 import com.example.sungyoung.testproject1.dialog.MemoDialog;
 import com.example.sungyoung.testproject1.util.Util;
+import com.example.sungyoung.testproject1.view.ExpandableHeightGridView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class DiaryFragment extends Fragment {
     private AccountDBHelper dbHelper;
-
     private CalGridAdapter calGridAdapter;
-    private GridView gridView;
+    private ExpandableHeightGridView gridView;
     private TextView currentMonth;
     private ImageView prevYearBtn;
     private ImageView prevMonthBtn;
     private ImageView nextYearBtn;
     private ImageView nextMonthBtn;
 
-
+    private EditText searchEditText;
+    private Button searchButton;
+    InputMethodManager imm ;
     String pattern = "yyyy년 MM월";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);  // 출력용으로 쓸 데이트 포맷
+
+    private String searchQuery = "";
+    private ArrayList<String> resultList;
+    private int index;
+
+
     public DiaryFragment() {
         // Required empty public constructor
     }
@@ -61,7 +79,7 @@ public class DiaryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
         init(view);
-        initCalendar();
+        initCalendar(null);
         initListener();
         return view;
     }
@@ -73,15 +91,62 @@ public class DiaryFragment extends Fragment {
         String todayStr = simpleDateFormat.format(today);
         currentMonth.setText(todayStr);
 
-        gridView = (GridView)view.findViewById(R.id.cal_gridview);
-
+        gridView = (ExpandableHeightGridView)view.findViewById(R.id.cal_gridview);
+        gridView.setExpanded(true);
         prevYearBtn = (ImageView) view.findViewById(R.id.prevYear);
         prevMonthBtn = (ImageView) view.findViewById(R.id.prevMonth);
         nextYearBtn = (ImageView) view.findViewById(R.id.nextYear);
         nextMonthBtn = (ImageView) view.findViewById(R.id.nextMonth);
 
+        searchEditText = (EditText) view.findViewById(R.id.searchEditText);
+        searchButton = (Button) view.findViewById(R.id.searchButton);
     }
     public void initListener() {
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //키패드내리기
+                imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
+
+
+                String query = searchEditText.getText().toString();
+
+                if(searchQuery.equals(query)){
+                    // 검색안함
+                    initCalendar(resultList.get(index));
+                    index = (index+1) % resultList.size();
+                }
+                else{
+                    resultList = new ArrayList<>();
+                    searchQuery = query;
+                    Cursor cursor = dbHelper.selectDiaryLikeMemo(query);
+                    while(cursor.moveToNext()){
+                        String date = cursor.getString(cursor.getColumnIndex("date"));
+                        //Log.d("selectDiaryLikeMemo", date);
+                        resultList.add(date);
+                    }
+                    Collections.sort(resultList, new Comparator<String>() {
+                        @Override
+                        public int compare(String s1, String s2) {
+                            Date today = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
+                            Date date1 = Util.getStringToDate(s1);
+                            Date date2 = Util.getStringToDate(s2);
+                            return Long.compare(Math.abs(today.getTime() - date1.getTime()), Math.abs(today.getTime() - date2.getTime()));
+                        }
+                    });
+                    for(String s : resultList){
+                        Log.d("selectDiaryLikeMemo", s);
+                    }
+                    index = 0;
+                    initCalendar(resultList.get(index));
+                    index = (index+1) % resultList.size();
+                }
+
+            }
+        });
+
         prevYearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +159,7 @@ public class DiaryFragment extends Fragment {
                 String prevYear = simpleDateFormat.format(calendar.getTime());
                 currentMonth.setText(prevYear);
 
-                initCalendar();
+                initCalendar(null);
             }
         });
         prevMonthBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +174,7 @@ public class DiaryFragment extends Fragment {
                 String prevMonth = simpleDateFormat.format(calendar.getTime());
                 currentMonth.setText(prevMonth);
 
-                initCalendar();
+                initCalendar(null);
             }
         });
 
@@ -125,7 +190,7 @@ public class DiaryFragment extends Fragment {
                 String nextYear = simpleDateFormat.format(calendar.getTime());
                 currentMonth.setText(nextYear);
 
-                initCalendar();
+                initCalendar(null);
             }
         });
         nextMonthBtn.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +205,7 @@ public class DiaryFragment extends Fragment {
                 String prevMonth = simpleDateFormat.format(calendar.getTime());
                 currentMonth.setText(prevMonth);
 
-                initCalendar();
+                initCalendar(null);
             }
         });
 
@@ -148,8 +213,12 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //메모 다이얼로그 오픈
+
+                if(!calGridAdapter.getItem(i).isUse()){
+                    return;
+                }
                 TextView curDay = (TextView)view.findViewById(R.id.day);
-                String curDate = currentMonth.getText().toString() + " " + curDay.getText().toString() + "일";
+                String curDate = currentMonth.getText().toString() + " " + Util.addZeroToDay(curDay.getText().toString()) + "일";
 
                 final View innerView = getLayoutInflater().inflate(R.layout.dialog_memo, null);
                 MemoDialog mmoDialog = new MemoDialog(getContext(), curDate);
@@ -162,7 +231,7 @@ public class DiaryFragment extends Fragment {
                 mmoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        initCalendar();
+                        initCalendar(null);
                     }
                 });
             }
@@ -171,11 +240,31 @@ public class DiaryFragment extends Fragment {
 
     }
 
-    public void initCalendar(){
+    public void initCalendar(String paramDate){
+
+        String startDay = "";
+        boolean isSearch = false;
+        if(paramDate == null){
+            startDay = currentMonth.getText().toString() + " 01일";
+        }
+        else{
+            //검색 중인 경우
+            isSearch = true;
+            startDay = paramDate;
+            Date d = Util.getStringToDate(startDay);
+            String monthStr = simpleDateFormat.format(d);
+            currentMonth.setText(monthStr);
+
+            startDay = monthStr + " 01일";;
+        }
 
         Calendar calendar = Calendar.getInstance();
-        String startDay = currentMonth.getText().toString() + " 01일";
         Date date = Util.getStringToDate(startDay);
+
+        calendar.setTime(date);
+        calendar.add(calendar.MONTH, -1);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); //말일 구
+        int prevFinishDate = calendar.get(Calendar.DATE);   // 출력 형식을 지정해줍니다.
 
         calendar.setTime(date);
         int weekIndex = calendar.get(Calendar.DAY_OF_WEEK); //요일
@@ -186,21 +275,34 @@ public class DiaryFragment extends Fragment {
         calGridAdapter = new CalGridAdapter();
 
         for(int i = 1 ; i < weekIndex ; i++){
-            calGridAdapter.addItem(new CalGridItem("",""));
+            //보이는 이전달 채우기
+            calGridAdapter.addItem(new CalGridItem(Integer.toString(prevFinishDate-(weekIndex-1) + i),"", false, false));
         }
 
     /*
     *  db에서 메모 들고오기
     * */
+        Date d = null;
+        int day = 0;
+        if(isSearch){
+            d = Util.getStringToDate(paramDate);
+            calendar.setTime(d);
+            day = calendar.get(Calendar.DATE);
+        }
 
         Cursor cursor;
         for(int i = 1 ; i <= finishDate ; i++){
-            cursor = dbHelper.selectMemo(currentMonth.getText().toString() + " "+i+"일");
+            cursor = dbHelper.selectMemo(currentMonth.getText().toString() + " "+Util.addZeroToDay(Integer.toString(i))+"일");
             String memo = "";
             if(cursor.moveToNext()){
                 memo = cursor.getString(cursor.getColumnIndex("memo"));
             }
-            calGridAdapter.addItem(new CalGridItem( Integer.toString(i), memo));
+            if(isSearch && day == i){
+                calGridAdapter.addItem(new CalGridItem( Integer.toString(i), memo, true, true));
+            }
+            else{
+                calGridAdapter.addItem(new CalGridItem( Integer.toString(i), memo, true, false));
+            }
         }
 
         //나머지칸 채우기
@@ -210,8 +312,9 @@ public class DiaryFragment extends Fragment {
         }else{
             filledDay = 35 -filledDay;
         }
+
         for(int i = 1 ; i <= filledDay  ; i++){
-            calGridAdapter.addItem(new CalGridItem( "0"+Integer.toString(i), ""));
+            calGridAdapter.addItem(new CalGridItem( Util.addZeroToDay(Integer.toString(i)), "", false, false));
         }
 
         gridView.setAdapter(calGridAdapter);
@@ -250,7 +353,7 @@ public class DiaryFragment extends Fragment {
             String today = simpleDateFormat.format(date);
 
             calendar.setTime(date);
-            String day = Integer.toString(calendar.get(Calendar.DATE));   // 출력 형식을 지정해줍니다.
+            String day = Integer.toString(calendar.get(Calendar.DATE));
 
             if(today.contains(selDate) && day.equals(items.get(i).getDay())){
                 isToday = true;
@@ -301,6 +404,14 @@ class CalGridViewer extends LinearLayout {
             day.setTypeface(null, Typeface.BOLD);
             dateoutter.setBackgroundResource(R.drawable.border_red);
         }
+        if(!singerItem.isUse()){
+            day.setTextColor(Color.LTGRAY);
+            memo.setTextColor(Color.LTGRAY);
+            dateoutter.setBackgroundColor(Color.rgb(252,252,252));
+        }
+        if(singerItem.isUse() && singerItem.isSearch()){
+            dateoutter.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary2));
+        }
     }
 }
 
@@ -308,10 +419,14 @@ class CalGridItem {
 
     private String day;
     private String memo;
+    private boolean isUse;
+    private boolean isSearch;
 
-    public CalGridItem(String day, String memo) {
+    public CalGridItem(String day, String memo, boolean isUse, boolean isSearch) {
         this.day = day;
         this.memo = memo;
+        this.isUse = isUse;
+        this.isSearch = isSearch;
     }
 
     public String getDay() {
@@ -330,11 +445,29 @@ class CalGridItem {
         this.memo = memo;
     }
 
+    public boolean isUse() {
+        return isUse;
+    }
+
+    public void setUse(boolean use) {
+        isUse = use;
+    }
+
+    public boolean isSearch() {
+        return isSearch;
+    }
+
+    public void setSearch(boolean search) {
+        isSearch = search;
+    }
+
     @Override
     public String toString() {
         return "CalGridItem{" +
                 "day='" + day + '\'' +
                 ", memo='" + memo + '\'' +
+                ", isUse=" + isUse +
+                ", isSearch=" + isSearch +
                 '}';
     }
 }

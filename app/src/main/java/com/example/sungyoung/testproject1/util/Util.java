@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Util {
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
     public static Date getStringToDate(String dateStr){
         Date date = null;
         try {
@@ -18,5 +18,11 @@ public class Util {
         }
 
         return date;
+    }
+    public static String addZeroToDay(String day){
+        if(day.length() == 1){
+            day = "0" + day;
+        }
+        return day;
     }
 }

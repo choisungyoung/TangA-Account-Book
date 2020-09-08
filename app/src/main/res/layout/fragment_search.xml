@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:text="검색하기"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:textStyle="bold" />
 
