@@ -25,4 +25,10 @@ public class Util {
         }
         return day;
     }
+
+    public static String makeSearchMsg(int total, int idx){
+        String result = "";
+        result = total + "건 중 " + idx + "번째입니다.";
+        return result;
+    }
 }

@@ -134,6 +134,10 @@ public class AccountDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+
+
+
     public void printAccountData(){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT _id, date, accountname, price, imex FROM account ;" ,  null);

@@ -12,12 +12,15 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sungyoung.testproject1.R;
 import com.example.sungyoung.testproject1.account.AccountDBHelper;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class MemoDialog extends Dialog {
 
@@ -28,6 +31,7 @@ public class MemoDialog extends Dialog {
     private EditText memoEditText;
     private String curDate;
 
+    InputMethodManager imm ;
     public MemoDialog(@NonNull Context context, String curDate) {
         super(context);
         this.context = context;
@@ -63,9 +67,15 @@ public class MemoDialog extends Dialog {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(memoEditText.getWindowToken(), 0);
+
                 closeDialog();
             }
         });
+
+
     }
     public void closeDialog(){
         this.dismiss();

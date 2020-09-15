@@ -55,6 +55,7 @@ public class DiaryFragment extends Fragment {
     private ImageView nextMonthBtn;
 
     private EditText searchEditText;
+    private TextView resultTextView;
     private Button searchButton;
     InputMethodManager imm ;
     String pattern = "yyyy년 MM월";
@@ -99,7 +100,10 @@ public class DiaryFragment extends Fragment {
         nextMonthBtn = (ImageView) view.findViewById(R.id.nextMonth);
 
         searchEditText = (EditText) view.findViewById(R.id.searchEditText);
+        resultTextView = (TextView) view.findViewById(R.id.resultTextView);
         searchButton = (Button) view.findViewById(R.id.searchButton);
+
+        resultList = new ArrayList<>();
     }
     public void initListener() {
 
@@ -112,25 +116,41 @@ public class DiaryFragment extends Fragment {
 
 
                 String query = searchEditText.getText().toString();
+                if("".equals(query)){
+                    initCalendar(null);
+                    Toast.makeText(view.getContext(), "검색어를 입력하세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                if(searchQuery.equals(query)){
+                Cursor cursor = dbHelper.selectDiaryLikeMemo(query); //현재검색중인 결과와 다르면
+
+                if(searchQuery.equals(query) && resultList.size() == cursor.getCount()){
                     // 검색안함
+                    if(resultList.size() == 0){
+                        return;
+                    }
+
+                    resultTextView.setText(Util.makeSearchMsg(resultList.size(), index + 1));
                     initCalendar(resultList.get(index));
                     index = (index+1) % resultList.size();
                 }
                 else{
                     resultList = new ArrayList<>();
-                    searchQuery = query;
-                    Cursor cursor = dbHelper.selectDiaryLikeMemo(query);
+                    searchQuery = query;                    // 현재검색하고 있는 검색어 저장
+
                     while(cursor.moveToNext()){
                         String date = cursor.getString(cursor.getColumnIndex("date"));
-                        //Log.d("selectDiaryLikeMemo", date);
                         resultList.add(date);
                     }
+
+                    final Date today = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
+                    today.setHours(0);
+                    today.setMinutes(0);
+                    today.setSeconds(0);
+
                     Collections.sort(resultList, new Comparator<String>() {
                         @Override
                         public int compare(String s1, String s2) {
-                            Date today = new Date();      // birthday 버튼의 초기화를 위해 date 객체와 SimpleDataFormat 사용
                             Date date1 = Util.getStringToDate(s1);
                             Date date2 = Util.getStringToDate(s2);
                             return Long.compare(Math.abs(today.getTime() - date1.getTime()), Math.abs(today.getTime() - date2.getTime()));
@@ -140,8 +160,15 @@ public class DiaryFragment extends Fragment {
                         Log.d("selectDiaryLikeMemo", s);
                     }
                     index = 0;
+                    if(resultList.size() == 0){
+                        initCalendar(null);
+                        resultTextView.setText("검색결과가 없습니다.");
+                        return;
+                    }
+                    resultTextView.setText(Util.makeSearchMsg(resultList.size(), index + 1));
                     initCalendar(resultList.get(index));
                     index = (index+1) % resultList.size();
+
                 }
 
             }
@@ -231,7 +258,13 @@ public class DiaryFragment extends Fragment {
                 mmoDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        initCalendar(null);
+                        if(resultList.size() > 0){
+                            //검색 중 메모 갔다와도 검색 결과 나오게
+                            initCalendar(resultList.get(index-1 >= 0 ? index-1 : resultList.size() - 1 ));
+                        }
+                        else{
+                            initCalendar(null);
+                        }
                     }
                 });
             }
@@ -292,6 +325,8 @@ public class DiaryFragment extends Fragment {
 
         Cursor cursor;
         for(int i = 1 ; i <= finishDate ; i++){
+            //사용할 30일 채우기
+
             cursor = dbHelper.selectMemo(currentMonth.getText().toString() + " "+Util.addZeroToDay(Integer.toString(i))+"일");
             String memo = "";
             if(cursor.moveToNext()){
@@ -363,7 +398,8 @@ public class DiaryFragment extends Fragment {
                 items.get(i).setDay(items.get(i).getDay().substring(1));
             }
 
-            calGridViewer.setItem(items.get(i), isToday);
+            Log.d("getViewIndex", Integer.toString(i));
+            calGridViewer.setItem(items.get(i), isToday, i);
             return calGridViewer;
         }
     }
@@ -394,7 +430,7 @@ class CalGridViewer extends LinearLayout {
         memo = (TextView)findViewById(R.id.memo);
     }
 
-    public void setItem(CalGridItem singerItem, boolean isToday){
+    public void setItem(CalGridItem singerItem, boolean isToday, int index){
 
         day.setText(singerItem.getDay());
         memo.setText(singerItem.getMemo());
@@ -408,6 +444,16 @@ class CalGridViewer extends LinearLayout {
             day.setTextColor(Color.LTGRAY);
             memo.setTextColor(Color.LTGRAY);
             dateoutter.setBackgroundColor(Color.rgb(252,252,252));
+        }
+        else{
+            if(index % 7 == 0){
+                //일요일
+                day.setTextColor(Color.RED);
+            }
+            else if(index % 7 == 6){
+                //토요일
+                day.setTextColor(Color.rgb(63,81,181));
+            }
         }
         if(singerItem.isUse() && singerItem.isSearch()){
             dateoutter.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary2));

@@ -15,6 +15,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -473,6 +474,7 @@ class SpinnerAdapter extends ArrayAdapter<String> {
         }
 
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
+        tv.setGravity(Gravity.CENTER);
         tv.setText(items[position]);
         tv.setTextSize(20);
         return convertView;
@@ -490,8 +492,9 @@ class SpinnerAdapter extends ArrayAdapter<String> {
         }
 
         TextView tv = (TextView) convertView.findViewById(android.R.id.text1);
+        tv.setGravity(Gravity.CENTER);
         tv.setText(items[position]);
-        tv.setTextSize(20);
+        tv.setTextSize(18);
         return convertView;
     }
 
