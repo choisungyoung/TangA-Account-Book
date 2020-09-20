@@ -15,6 +15,7 @@
         <item>도움말</item>
         <item>데이터 내보내기</item>
         <item>데이터 불러오기</item>
+        <!--
         <item>Account 조회</item>
         <item>Diary 조회</item>
 
@@ -22,5 +23,10 @@
         <item>Diary delete all(개발)</item>
         <item>Account테이블 지우기(개발)</item>
         <item>Diary테이블 지우기(개발)</item>
+        -->
     </string-array>
+    <string-array name="admin_setting_array">
+        <item>모든데이터 제거(admin)</item>
+    </string-array>
+
 </resources>

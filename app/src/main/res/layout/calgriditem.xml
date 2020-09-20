@@ -8,7 +8,7 @@
     <LinearLayout
             android:id="@+id/dateoutter"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="85dp"
             android:background="@drawable/border_black"
             android:orientation="vertical"
             android:padding="2dp">
@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="6"
+                android:maxLines="5"
                 android:text="TextView2"
                 android:textSize="10dp" />
     </LinearLayout>

@@ -4,7 +4,7 @@
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@android:color/transparent"
-        tools:context=".dialog.MemoDialog">
+        tools:context="com.tanga.sungyoung.testproject1.dialog.MemoDialog">
 
     <TextView
             android:id="@+id/dialog_title"
